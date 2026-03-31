@@ -1,0 +1,23 @@
+# Terraform local state — keep safe after bootstrap run
+*.tfstate
+*.tfstate.backup
+
+# Terraform working directory
+.terraform/
+
+# Variable files — create your own locally, never commit secrets
+*.tfvars
+*.tfvars.json
+
+# Crash log
+crash.log
+crash.*.log
+
+# Override files
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Terraform lock file should be committed to version control
+# .terraform.lock.hcl
