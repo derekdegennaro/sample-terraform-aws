@@ -12,6 +12,15 @@ on:
           - plan
           - apply
           - destroy
+      environment_name:
+        description: "Environment name (e.g., dev, staging, prod)"
+        required: true
+        default: dev
+        type: choice
+        options:
+          - dev
+          - staging
+          - prod
 
 # Only one Terraform run at a time. A second trigger queues rather than cancels.
 concurrency:
@@ -44,7 +53,7 @@ jobs:
           terraform_version: "~1.5"
 
       - name: Terraform Init
-        run: terraform init
+        run: terraform init -backend-config=envs/${{ inputs.environment_name }}/backend.hcl
 
       - name: Terraform Plan
         if: inputs.action != 'destroy'
