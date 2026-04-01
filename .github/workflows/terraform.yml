@@ -11,6 +11,7 @@ on:
         options:
           - plan
           - apply
+          - destroy
 
 # Only one Terraform run at a time. A second trigger queues rather than cancels.
 concurrency:
@@ -43,14 +44,15 @@ jobs:
           terraform_version: "~1.5"
 
       - name: Terraform Init
-        #working-directory: terraform
         run: terraform init
 
       - name: Terraform Plan
-        #working-directory: terraform
         run: terraform plan -out=tfplan
 
       - name: Terraform Apply
         if: inputs.action == 'apply'
-        #working-directory: terraform
         run: terraform apply tfplan
+
+      - name: Terraform Destroy
+        if: inputs.action == 'destroy'
+        run: terraform destroy -auto-approve
