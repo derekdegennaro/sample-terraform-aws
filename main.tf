@@ -68,3 +68,8 @@ resource "aws_s3_bucket_public_access_block" "sample" {
   ignore_public_acls      = true
   restrict_public_buckets = true
 }
+
+resource "aws_instance" "example" {
+  ami           = "ami-0c55b159cbfafe1f0"
+  instance_type = "xxx"
+}
