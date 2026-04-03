@@ -8,12 +8,26 @@ jobs:
     tflint:
         runs-on: ubuntu-latest
 
-        env:
-            FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
         steps:
             - uses: actions/checkout@v5
               name: Checkout source code
+
+            - uses: hashicorp/setup-terraform@v3
+              name: Setup Terraform
+              with:
+                  terraform_version: "~1.5"
+
+            - name: Run terraform init
+              run: terraform init -backend=false -no-color
+              continue-on-error: true
+
+            - name: Run terraform fmt
+              run: terraform fmt -check -recursive -no-color
+              continue-on-error: true
+
+            - name: Run terraform validate
+              run: terraform validate -no-color
+              continue-on-error: true
 
             - uses: terraform-linters/setup-tflint@v6
               name: Setup TFLint
